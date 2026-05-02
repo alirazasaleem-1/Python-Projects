@@ -1,4 +1,11 @@
 #  Life Energy Dashboard 🚀 
+import json 
+json_path = r"D:\01_Coding\Python Projects\scores.json"
+try:
+    with open(json_path, "r") as f:
+        weekly_scores = json.load(f)
+except FileNotFoundError:
+    weekly_scores = []
 
 def user_input():
     study = float(input("How many hours have you studied: "))
@@ -38,7 +45,38 @@ def calculate(study, phone, sleep, waste):
         print("⚠ Average - Improve Focus ")
     else:
         print("🏮 Low Discipline - Danger Zone ")
+    return life_score 
     
+# Weekly Score System
+def weekly_report(scores):
+    if len(scores) == 0:
+        print("⚠ No weekly data yet.")
+        return 
+    
+    avg = sum(scores) / len(scores) 
+
+    print("\n📊 WEEKLY REPORT")
+    print(f"Days Tracked: {len(scores)}")
+    print(f"Average Life Score: {round(avg, 2)}")
+
+    if avg >= 70:
+        print("💪 Excellent Week! ")
+    elif avg >= 40: 
+        print("⚠ Moderate Week - Improve consistency")
+    else: 
+        print("🔴 Weak Week - Too much distraction")
+
+
 # Main Flow
 data = user_input()
-calculate(*data) 
+score = calculate(*data) 
+
+if score is not None:
+    weekly_scores.append(score) 
+    with open(json_path, "w") as f:
+        json.dump(weekly_scores, f) 
+    print("✅ Saved to Json File")
+
+    check = input("\nDo you want weekly report? (yes/no): ").lower()
+    if check == "yes":
+        weekly_report(weekly_scores) 
