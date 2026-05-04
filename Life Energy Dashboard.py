@@ -44,7 +44,12 @@ def calculate(study, phone, sleep, waste):
         print("⚠ No activity recorded. ")
         return 
     
-    life_score = (study*2 - phone - sleep - waste)
+    if 6 <= sleep <= 8:
+        sleep_score = 5
+    else:
+        sleep_score = -abs(sleep - 7)
+
+    life_score = (study*2 - phone - waste + sleep_score)
     life_score = max(0, min(100, life_score))
     print(f"🔥 Life Score : {round(life_score, 2)} / 100")
 
