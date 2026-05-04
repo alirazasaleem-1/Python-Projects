@@ -1,40 +1,35 @@
-print("Welcome to my Computer Quiz Game. ")
+# Computer Quiz Game
 
-playing = input("Do you want to play? ")
+questions = {
+        "CPU stands for?": "central processing unit",
+        "GPU stands for?": "graphics processing unit",
+        "RAM stands for?": "random access memory",
+        "PSU stands for?": "power supply unit"
+    }
 
-if playing != "yes":
-    quit()
+def start_game():
+    print("Welcome to my Computer Quiz Game. ")
 
-score = 0
+    playing = input("Do you want to play? ")
 
-print("Okay! Let's Play :)")
-answer = input("What does CPU stands for: ").lower()
-if answer == "central processing unit":
-    print("Correct! Here is your candy: 🍬")  
-    score += 1
-else:
-    print("Incorrect. ")  
+    if playing != "yes":
+        quit()
 
-answer = input("What does GPU stands for: ").lower()
-if answer == "graphics processing unit":
-    print("Correct! Here is your candy: 🍬")
-    score += 1  
-else:
-    print("Incorrect. ")  
+    score = 0
 
-answer = input("What does RAM stands for: ").lower()
-if answer == "random access memory":
-    print("Correct! Here is your candy: 🍬")
-    score += 1  
-else:
-    print("Incorrect. ")  
+    print("Okay! Let's Play :)")
 
-answer = input("What does PSU stands for: ").lower()
-if answer == "power supply unit":
-    print("Correct! Here is your candy: 🍬")
-    score += 1  
-else:
-    print("Incorrect. ")  
+    for question, correct_answer in questions.items():
+        answer = input(question + " ").lower()
 
-print("You got " + str(score ) + " questions right. ")
-print("You got" + str((score/4) * 100 ) + " %")
+        if answer == correct_answer:
+            print("Correct! 🍬")
+            score += 1
+        else:
+            print("Incorrect ❌")
+
+    print("\nGame Over 🎯")    
+    print("You got " + str(score ) + " questions right. ")
+    print("You got " + str((score/len(questions)) * 100 ) + " %")
+
+start_game()
