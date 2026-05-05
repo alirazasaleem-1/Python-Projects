@@ -67,10 +67,13 @@ def weekly_report(scores):
         print("⚠ No weekly data yet.")
         return 
     
-    avg = sum(scores) / len(scores) 
+    total = sum(item["score"] for item in scores)
+    avg = total / len(scores) 
 
     print("\n📊 WEEKLY REPORT")
     print(f"Days Tracked: {len(scores)}")
+    for item in scores:
+        print(f"{item['date']} -> {item['score']}")
     print(f"📅 Average Life Score: {round(avg, 2)} / 100")
     
     if avg >= 80:
@@ -90,7 +93,12 @@ data = user_input()
 score = calculate(*data) 
 
 if score is not None:
-    weekly_scores.append(score) 
+    today = str(date.today())
+    entry = {
+        "date": today,
+        "score": score 
+    }
+    weekly_scores.append(entry) 
     print(f"✅ Saved for date: {date.today()}")
     with open(json_path, "w") as f:
         json.dump(weekly_scores, f, indent=4) 
