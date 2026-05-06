@@ -1,5 +1,6 @@
 #  Life Energy Dashboard 🚀 
 import json 
+import matplotlib.pyplot as plt 
 from datetime import date 
 json_path = r"D:\01_Coding\Python Projects\scores.json"
 try:
@@ -87,6 +88,28 @@ def weekly_report(scores):
     else: 
         print("🔴 Weak Week - Too much distraction")
 
+def plot_trend(scores):
+    if len(scores) == 0:
+        print("⚠ No data to plot yet.")
+        return 
+
+    dates = [item["date"] for item in scores]
+    values = [item["score"] for item in scores]
+
+    plt.figure(figsize=(8, 4))
+    plt.plot(dates, values, marker='o')
+
+    plt.title("📈 Life Score Trend")
+    plt.xlabel("Date")
+    plt.ylabel("Score")
+    plt.xticks(rotation=45)
+    plt.grid()
+
+    plt.axhline(y=70, color='g', linestyle='--')
+    plt.axhline(y=40, color='r', linestyle='--')
+
+    plt.tight_layout()
+    plt.show()
 
 # Main Flow
 data = user_input()
@@ -104,6 +127,7 @@ if score is not None:
         json.dump(weekly_scores, f, indent=4) 
     print("✅ Saved to Json File")
 
-    check = input("\nDo you want weekly report? (yes/no): ").lower()
+    check = input("\nDo you want weekly report + graph? (yes/no): ").lower()
     if check == "yes":
         weekly_report(weekly_scores) 
+        plot_trend(weekly_scores)
