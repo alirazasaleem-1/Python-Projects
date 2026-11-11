@@ -1,0 +1,6 @@
+# Runtime data / logs
+PyWhatKit_DB.txt
+*.key
+__pycache__/
+*.pyc
+.venv/
